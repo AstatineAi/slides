@@ -13,7 +13,7 @@ revealOptions:
     width: 1000
 ---
 
-<div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+<div style="display: flex; justify-content: center; align-items: center; height: 700px;">
   <div style="text-align: center; padding: 40px; background-color: white; border: 2px solid rgb(0, 63, 163); border-radius: 20px; box-shadow: 0 0 20px rgba(0,0,0,0.1);">
     <h1 style="font-size: 48px; font-weight: bold; margin-bottom: 20px; color: #333;">你应该了解的互联网技能</h1>
     <p style="font-size: 24px; color: #666;">如何用搜索解决问题</p>
@@ -347,8 +347,6 @@ SEO 已经死得差不多了，不用百度搜索，低质量内容会少很多
 <div style=" margin-top: 10px; margin-right: 50px;" markdown="1">
 
 <img src="images/trouble_shooting.png" width="35%" style="float: right;">
-
-<br/>
 
 - Trouble shooting 是一件很费力的事情
 - 你还会遇到一样的问题吗？

@@ -20,6 +20,14 @@ jobs:
         with:
           node-version: '18'
 
+      - name: Cache reveal-md dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
       - name: Install reveal-md
         run: npm install -g reveal-md
 
