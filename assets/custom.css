@@ -8,6 +8,16 @@
   --r-code-font: "Fira Code", sans-serif;
 }
 
+code {
+  font-size: 20px;
+  display: inline-block;
+  padding: 1px 3px;
+  background-color: #f0f0f0;
+  color: #007BFF;
+  border-radius: 1px;
+  font-family: var(--r-code-font)
+}
+
 .reveal .slide-number {
   font-size: 26px;
   border-radius: 5px;
