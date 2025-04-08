@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>cs110-review</title>
+    <link rel="shortcut icon" href="./favicon.ico" />
+    <link rel="stylesheet" href="./dist/reset.css" />
+    <link rel="stylesheet" href="./dist/reveal.css" />
+    <link rel="stylesheet" href="./dist/theme/simple.css" id="theme" />
+    <link rel="stylesheet" href="./css/highlight/github.css" />
+
+    <link rel="stylesheet" href="./_assets/assets/custom.css" />
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section data-markdown data-separator="<!--s-->" data-separator-vertical="<!--v-->">
+          <textarea data-template>
+            
+
+<div style="display: flex; justify-content: center; align-items: center; height: 700px;">
+  <div style="text-align: center; padding: 40px; background-color: white; border: 2px solid rgb(0, 63, 163); border-radius: 20px; box-shadow: 0 0 20px rgba(0,0,0,0.1);">
+    <h1 style="font-size: 48px; font-weight: bold; margin-bottom: 20px; color: #333;">Vending Machine Project Report</h1>
+    <p style="font-size: 24px; color: #666;">Phase 1: Requirements</p>
+    <p style="font-size: 16px; color: #999; margin-top: 20px;">Hengyu Ai | 2025-04-09 </p>
+  </div>
+</div>
+
+<!--s-->
+
+<div class="middle center">
+  <div style="width: 100%">
+
+  # Part.1 Interface
+  
+  </div>
+</div>
+
+<!--v-->
+
+## Machine Interface
+
+<div style=" margin-top: 10px; margin-right: 50px;" markdown="1">
+
+<img src="images/machine.jpg" width="35%" style="float: right;">
+
+- Panel with serveal hardware
+  - Coin insert
+  - Cash insert
+  - Collect change
+  - Return fake coin/cash
+  - Keyhole for maintenance
+- Case at the bottom
+  - Collect goods
+- Maintenance interface
+  - Available if the machine is open
+
+</div>
+
+<!--v-->
+
+## Screen UI
+
+<div style="margin-top: 10px; margin-right: 50px;" markdown="1">
+
+<img src="images/ui.png" width="40%" style="margin-top: -10px; float: right;">
+
+- The main screen (touch screen)
+  - Add/Remove products to cart
+  - Clear cart
+  - Checkout
+  - Display notification
+    - Fake coin/cash
+    - No merchandise
+    - Money not enough
+    - ...
+  - Show product information
+    - Name
+    - Price
+    - Image
+
+</div>
+
+<!--s-->
+
+<div class="middle center">
+  <div style="width: 100%">
+
+  # Part.2 Sensors
+  
+  </div>
+</div>
+
+<!--v-->
+
+## Fake Coin/Cash Sensor
+
+- Activate when inserting coin/cash
+- Detects fake coin/cash
+  - If detected, report to the main board
+  - Return fake coin/cash
+
+<!--v-->
+
+## Product Sensor
+
+- Detects if the product is available
+- Activates when the product is selected
+- If the product is not available
+  - Report to the main board
+  - Display notification on the screen
+
+<!--s-->
+
+<div class="middle center">
+  <div style="width: 100%">
+
+  # Part.3 Physical Environment
+  
+  </div>
+</div>
+
+<!--v-->
+
+## Coin/Cash Container
+
+- Collects coins/cash
+- Fake coin/cash will be returned
+- Automatically spits out the corresponding amount of coins/cashes according to the amount of change.
+- Only accessible by maintenance personnel
+
+<!--v-->
+
+## Product Storage
+
+- Stores products
+- Only accessible by maintenance personnel
+- Products are arranged in a grid
+  - Each grid has a sensor
+  - Product type and information can by modified by maintenance personnel
+
+<!--s-->
+
+<div style="display: flex; justify-content: center; align-items: center; height: 700px;   ">
+  <div style="text-align: center; padding: 40px; background-color: white; border-radius: 20px; box-shadow: 0 0 20px rgba(0,0,0,0.1);">
+    <div style="display: inline-block; padding: 20px 40px; border-radius: 10 px; margin-bottom: 20px;">
+      <h1 style="font-size: 48px; font-weight: bold; margin: 0; color: rgb(16, 33, 89)"> We’re Excited to Partner with You</h1>
+    </div>
+    <p style="font-size: 24px; color: #666; margin: 0;">🚀 Project Launched 🚀</p>
+  </div>
+</div>
+
+
+
+          </textarea>
+        </section>
+      </div>
+    </div>
+
+    <script src="./dist/reveal.js"></script>
+
+    <script src="./mermaid/dist/mermaid.min.js"></script>
+
+    <script src="./plugin/markdown/markdown.js"></script>
+    <script src="./plugin/highlight/highlight.js"></script>
+    <script src="./plugin/zoom/zoom.js"></script>
+    <script src="./plugin/notes/notes.js"></script>
+    <script src="./plugin/math/math.js"></script>
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        slideNumber: true,
+        highlight: {
+          highlightOnLoad: false
+        },
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath
+        ]
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"transition":"slide","transitionSpeed":"fast","center":false,"slideNumber":"c/t","width":1000,"_":["./cs132-vending-machine-consult1/cs132-vending-machine-consult1.md"],"static":"static/cs132-vending-machine-consult1"}, queryOptions);
+    </script>
+
+
+    <script>
+      Reveal.initialize(options);
+      Reveal.addEventListener('ready', function (event) {
+        const blocks = Reveal.getRevealElement().querySelectorAll('pre code:not(.mermaid)');
+        const hlp = Reveal.getPlugin('highlight');
+        blocks.forEach(hlp.highlightBlock);
+      });
+    </script>
+
+    <script>
+      const mermaidOptions = extend({ startOnLoad: false }, {});
+      mermaid.startOnLoad = false;
+      mermaid.initialize(mermaidOptions);
+      const cb = function (event) {
+        mermaid.init(mermaidOptions, '.stack.present > .present pre code.mermaid');
+        mermaid.init(mermaidOptions, '.slides > .present:not(.stack) pre code.mermaid');
+      }
+      Reveal.addEventListener('ready', cb);
+      Reveal.addEventListener('slidetransitionend', cb);
+    </script>
+  </body>
+</html>
