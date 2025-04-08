@@ -37,7 +37,7 @@ jobs:
             for file in $(find . -name '*.md' ! -name 'README.md'); do
                 output_dir="static/$(basename ${file%.md})"
                 echo $output_dir
-                reveal-md $file --static $output_dir
+                npm exec -- reveal-md $file --static $output_dir
                 file_dir=$(dirname $file)
                 if [ -d "$file_dir/images" ]; then
                     cp -r $file_dir/images $output_dir
