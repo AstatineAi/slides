@@ -29,7 +29,7 @@ jobs:
             ${{ runner.os }}-node-
 
       - name: Install reveal-md
-        run: npm install -g reveal-md
+        run: npm install
 
       - name: Build slides
         run: |
