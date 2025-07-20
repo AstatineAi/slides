@@ -200,6 +200,16 @@ To get Dafny to verifier to sign off on the `assert (size(pos) == 2)` we have to
 
 The SMT solver doesn't know where to instantiate the size axom. Dafny's instantiation heuristics come up short. The user must manually add the assertion.
 
+<!--v-->
+
+## Refinement Inference
+
+Some types may be stayed un-refined, but the refinement type system can infer some refinements automatically.
+
+$$
+\phi_1 \land \phi_2 \land \dots \land \phi_n \to p
+$$
+
 <!--s-->
 
 <div class="middle center">
@@ -221,7 +231,7 @@ The SMT solver doesn't know where to instantiate the size axom. Dafny's instanti
     <div style="display: inline-block; padding: 20px 40px; border-radius: 10 px; margin-bottom: 20px;">
       <h1 style="font-size: 48px; font-weight: bold; margin: 0; color: rgb(16, 33, 89)">Thanks for Listening</h1>
     </div>
-    <p style="font-size: 24px; color: #666; margin: 0;">Any questions?</p>
+    <p style="font-size: 24px; color: #666; margin: 0;"></p>
   </div>
 </div>
 
