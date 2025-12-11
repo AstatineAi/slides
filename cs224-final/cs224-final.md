@@ -1,0 +1,206 @@
+---
+title: cs224-final
+separator: <!--s-->
+verticalSeparator: <!--v-->
+theme: simple
+highlightTheme: github
+css: assets/custom.css
+revealOptions:
+    transition: 'slide'
+    transitionSpeed: fast
+    center: false
+    slideNumber: "c/t"
+    width: 1000
+---
+
+<div style="display: flex; justify-content: center; align-items: center; height: 700px;">
+  <div style="text-align: center; padding: 40px; background-color: white; border: 2px solid rgb(0, 63, 163); border-radius: 20px; box-shadow: 0 0 20px rgba(0,0,0,0.1);">
+    <h1 style="font-size: 42px; font-weight: bold; margin-bottom: 20px; color: #333;">AI for Testing Deep Learning Libraries</h1>
+    <p style="font-size: 24px; color: #666;">From Traditional Fuzzing to LLM-Driven Agents</p>
+    <p style="font-size: 16px; color: #999; margin-top: 20px;">Hengyu Ai, Xiang Li | 2025-12-12 </p>
+  </div>
+</div>
+
+<!--s-->
+
+<div class="middle center">
+  <div style="width: 100%">
+
+  # Part.1 The Problem
+  
+  </div>
+</div
+
+<!--v-->
+
+## DL Libraries as Infrastructure
+
+**Deep Learning libraries** (TensorFlow, PyTorch, JAX) are the backbone of modern AI.
+
+- Used in safety-critical domains: Autonomous driving, medical diagnostics, financial modeling.
+- Software faults here can lead to catastrophic real-world outcomes.
+- Architectural Complexity
+
+</br>
+
+- High-level Frontend (Python): Provides usability, flexibility, and dynamic typing.
+- High-performance Backend (C++/CUDA): Handles heavy tensor computations and automatic differentiation.
+
+
+**The Gap**: Bugs hide in the interaction between Python logic and low-level C++ memory management.
+
+<!--v-->
+
+## How to Analyze DL Libraries?
+
+- **Traditional Testing**: Unit tests, integration tests, and system tests.
+  - Limited coverage of complex interactions.
+  - Manual test case design is labor-intensive.
+- **Fuzzing**: Automated generation of random inputs to explore code paths.
+  - Effective for low-level bugs but struggles with high-level API semantics.
+- **Symbolic Execution**: Analyzes program paths using symbolic inputs.
+  - Computationally expensive and limited scalability.
+- **Static Analysis**: Examines code without execution.
+  - Python's dynamic nature limits effectiveness.
+
+<!--s-->
+
+<div class="middle center">
+  <div style="width: 100%">
+
+  # Part.2 Fuzzing
+  
+  </div>
+</div>
+
+<!--v-->
+
+## Why Dynamic Analysis?
+
+Limitations of Static Analysis in DL:
+
+- Dynamic Typing: Python's dynamic nature obscures the strict type/shape requirements of underlying C++ kernels.
+- Cross-Language Barriers: Analyzing data flow from Python to C++ is difficult without execution.
+
+The Case for Fuzzing (Dynamic Analysis):
+
+- Ground Truth: Verifies actual implementation correctness by executing inputs.
+- Memory Safety: Particularly effective at finding buffer overflows and use-after-free bugs in the C++ backend.
+- State-of-the-Art: API-level fuzzing is currently a prominent bug-finding approach.
+
+<!--v-->
+
+## Coverage-Guided Fuzzing
+
+Core Mechanism :
+
+- Uses feedback (code coverage) to guide input generation, unlike black-box random testing.
+- Instruments the target program to trace basic blocks or edges.
+
+The CGF Loop :
+  1. Corpus Maintenance: Queue of "interesting" seeds triggering new coverage.
+  2. Mutation: Bit flips, byte shuffling, splicing on seeds.
+  3. Execution & Feedback: If a new path is hit $\to$ Add input to Corpus.
+
+Standard Tools:
+    - AFL: Process-based, genetic algorithms.
+    - LibFuzzer: In-process fuzzing, ideal for library APIs.
+
+<!--s-->
+
+<div class="middle center">
+  <div style="width: 100%">
+
+  # Part.3 Fuzzing in DL Libraries
+  
+  </div>
+</div>
+
+<!--v-->
+
+## From Models to APIs
+
+Phase 1: Model-Level Fuzzing (The "Black Box"):
+
+- Method: Generate/Mutate entire computation graphs (ONNX/Protobuf) .
+- Tools: CRADLE (Backend differential testing) , LEMON (Model mutation).
+- Limitation: The "Masking Effect"—bugs in specific operators are hidden by graph complexity.
+
+</br>
+
+Phase 2: API-Level Fuzzing (The "Frontend"):
+
+- Method: Target individual library functions directly to maximize utility coverage.
+- Tools: FreeFuzz (Mines open-source usage patterns) , DeepREL (Infers API relations).
+- Limitation: Heavy overhead from Python interpreter; often fails to penetrate deep C++ logic.
+
+<!--v-->
+
+## Barriers to Effectiveness
+
+1. Input Space Complexity:
+  - Inputs are Structured Tensors, not byte streams.
+  - Must satisfy: Data types, Shapes, Semantic constraints.
+  - Low Validity Ratio: Random mutations trigger trivial "invalid input" errors rather than core logic .
+2. Oracle Problem:
+   - How to define "correct"? Floating-point stochasticity vs. formal specs.
+3. Harness Generation:
+   Directly testing C++ backend requires writing complex C++ harnesses to instantiate tensors/contexts.
+
+<!--s-->
+
+<div class="middle center">
+  <div style="width: 100%">
+
+  # Part.4 AI-Assisted Solutions
+  
+  </div>
+</div>
+
+<!--v-->
+
+## TitanFuzz: Generative Fuzzing with LLMs
+
+Concept: LLMs are Zero-Shot Fuzzers.
+
+
+- Generation: Uses pre-trained LLMs (Codex) to synthesize valid seed programs autoregressively.
+- Mutation via "Semantic Infilling" :
+  - Instead of bit-flipping, it masks segments of valid code (e.g., arguments).
+  - Uses Infilling LLMs (InCoder) to fill the mask.
+
+Result: Explores the neighborhood of valid inputs while maintaining semantic coherence.
+
+<!--v-->
+
+## FlashFuzz: Fuzzing C++ Backends
+
+- Concept: Automating the Backend Interface.
+
+- Harness Synthesis: Uses LLMs to automatically generate C++ harnesses that bridge raw bytes to structured API inputs.
+  - "Fixing" Invalid Inputs: Generates code to sanitize fuzzer outputs.
+  - Value Mapping: Maps out-of-range values to valid enums.
+  - Value Prefilling: Satisfies constant requirements.
+
+<!--v-->
+
+## ModelMeta, NablaFuzz: Advanced Oracles
+
+- ModelMeta: Uses metamorphic relations across different model implementations to detect inconsistencies.
+- NablaFuzz: Leverages numerical properties (e.g., gradients) to define correctness criteria.
+
+<!--s-->
+
+## Summary
+
+- DL libraries are critical yet complex software infrastructures.
+- Traditional testing methods face challenges due to dynamic typing and cross-language barriers.
+- Fuzzing, especially coverage-guided, is a powerful dynamic analysis technique.
+- AI-assisted approaches (TitanFuzz, FlashFuzz) enhance fuzzing effectiveness by generating valid inputs and harnesses.
+- Advanced oracles (ModelMeta, NablaFuzz) help detect subtle bugs beyond crashes.
+- Future Directions: use BugsInDLLs dataset to benchmark different testing approaches.
+  - Bug reproduction
+  - Coverage analysis
+  - Effectiveness comparison
+
+
