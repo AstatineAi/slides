@@ -1,5 +1,5 @@
 ---
-title: cs224-final
+title: cs224-proposal
 separator: <!--s-->
 verticalSeparator: <!--v-->
 theme: simple
